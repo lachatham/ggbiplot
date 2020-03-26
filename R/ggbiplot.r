@@ -142,10 +142,14 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
   # Variables for text label placement
   df.v$angle <- with(df.v, (180/pi) * atan(yvar / xvar))
   df.v$hjust = with(df.v, (1 - varname.adjust * sign(xvar)) / 2)
-
+  
+  # palette to use
+  cbPalette <- c("#000000", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") #this is my manual color scale
+  
   # Base plot
   g <- ggplot(data = df.u, aes(x = xvar, y = yvar)) + 
-          xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal()
+          xlab(u.axis.labs[1]) + ylab(u.axis.labs[2]) + coord_equal()+
+       scale_colour_manual(values=colors)
 
   if(var.axes) {
     # Draw circle
@@ -162,7 +166,7 @@ ggbiplot <- function(pcobj, choices = 1:2, scale = 1, pc.biplot = TRUE,
       geom_segment(data = df.v,
                    aes(x = 0, y = 0, xend = xvar, yend = yvar),
                    arrow = arrow(length = unit(1/2, 'picas')), 
-                   color = muted('red'))
+                   color = ("black"))
   }
 
   # Draw either labels or points
